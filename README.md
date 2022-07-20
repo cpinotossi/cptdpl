@@ -2,6 +2,22 @@
 
 ## Setup Private Link with Storage Account
 
+~~~ mermaid
+classDiagram
+plDNS --> spoke : link/resolve
+plDNS: privatelink.core.windows.net
+hub --> spoke : peering
+hub --> onprem : peering
+hub : bastion
+hub : cidr 10.1.0.0/16
+onprem : cidr 172.16.0.0/16
+spoke : cidr 10.2.0.0/16
+hub : vm 10.1.0.4
+spoke : vm 10.2.0.4
+spoke : pe 10.2.0.5
+onprem : vm 172.16.0.4
+~~~
+
 Define variables:
 
 ~~~ bash
@@ -75,6 +91,6 @@ git init
 git remote add origin https://github.com/cpinotossi/$prefix.git
 git status
 git add *
-git commit -m"seperate pdns into own bicep module"
+git commit -m"private link with storage account"
 git push origin main 
 ~~~
