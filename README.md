@@ -6,8 +6,10 @@
 classDiagram
 pe1 --> plDNS
 pe1 --> storage1 : private link
+pe1 --> spoke1 : inject
 pe1: cptdpl1.blob.core.windows.net
 pe2 --> storage2 : private link
+pe2 --> spoke1 : inject 
 pe2: cptdpl2.blob.core.windows.net
 plDNS --> hub : link/resolve
 plDNS --> spoke1 : link/resolve
@@ -19,8 +21,6 @@ hub : cidr 10.1.0.0/16
 hub : vm 10.1.0.4
 onprem : cidr 172.16.0.0/16
 onprem : vm 172.16.0.4
-spoke1 --> pe1
-spoke1 --> pe2
 spoke1 : cidr 10.2.0.0/16
 spoke1 : vm 10.2.0.4
 spoke1 : pe1 10.2.0.5
