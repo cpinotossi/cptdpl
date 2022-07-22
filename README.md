@@ -6,10 +6,12 @@
 classDiagram
 pe1 --> plDNS
 pe1 --> storage1 : private link
+pe1: cptdpl1.blob.core.windows.net
 pe2 --> storage2 : private link
+pe2: cptdpl2.blob.core.windows.net
 plDNS --> hub : link/resolve
 plDNS --> spoke1 : link/resolve
-plDNS: privatelink.core.windows.net
+plDNS: privatelink.blob.core.windows.net
 hub --> spoke1 : peering
 hub --> onprem : peering
 hub : bastion
@@ -21,8 +23,8 @@ spoke1 --> pe1
 spoke1 --> pe2
 spoke1 : cidr 10.2.0.0/16
 spoke1 : vm 10.2.0.4
-spoke1 : pe 10.2.0.5
-spoke1 : pe 10.2.0.5
+spoke1 : pe1 10.2.0.5
+spoke1 : pe2 10.2.0.6
 storage1 : cptdpl1.blob.core.windows.net
 storage2 : cptdp12.blob.core.windows.net
 ~~~
