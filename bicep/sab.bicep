@@ -1,6 +1,7 @@
 targetScope='resourceGroup'
 
 param prefix string
+param postfix string
 param vnetname string
 param location string
 param myObjectId string
@@ -12,7 +13,7 @@ resource vnet 'Microsoft.Network/virtualNetworks@2021-03-01' existing = {
 }
 
 resource sa 'Microsoft.Storage/storageAccounts@2021-06-01' = {
-  name: prefix
+  name: '${prefix}${postfix}'
   location: location
   sku: {
     name: 'Standard_LRS'

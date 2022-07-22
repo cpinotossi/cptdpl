@@ -1,8 +1,9 @@
 param prefix string
 param location string
-param vnetname string
-param saname string
 param plname string
+param vnetname  string
+param saname string
+
 
 resource sa 'Microsoft.Storage/storageAccounts@2021-09-01' existing = {
   name: saname
@@ -40,3 +41,34 @@ resource pe 'Microsoft.Network/privateEndpoints@2020-11-01' = {
   }
 }
 
+resource pdns 'Microsoft.Network/privateDnsZones@2020-06-01' = {
+  name: 'privatelink.blob.core.windows.net'
+  location: 'global'
+}
+
+resource pedz 'Microsoft.Network/privateEndpoints/privateDnsZoneGroups@2020-11-01' = {
+  parent: pe
+  name: 'default'
+  properties: {
+    privateDnsZoneConfigs: [
+      {
+        name: prefix
+        properties: {
+          privateDnsZoneId: pdns.id
+        }
+      }
+    ]
+  }
+}
+
+resource dnslink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2018-09-01' = {
+  parent: pdns
+  name: 'pldspoke'
+  location: 'global'
+  properties: {
+    registrationEnabled: false
+    virtualNetwork: {
+      id: vnet.id
+    }
+  }
+}
